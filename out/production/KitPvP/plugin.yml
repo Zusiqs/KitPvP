@@ -1,0 +1,8 @@
+main: me.jeroenyt.kitpvp.KitPvP
+author: JeroenYT
+version: 1.0
+name: KitPvP
+description: KitPvP Project voor ReforgedMc
+commands:
+  kitpvp:
+    usage: /<command>
