@@ -6,10 +6,10 @@ import org.bukkit.inventory.ItemStack;
 public class KitModel {
 
     private final String name;
-    private ItemStack[] armorContents;
-    private ItemStack[] inventoryContents;
+    private final ItemStack[] armorContents;
+    private final ItemStack[] inventoryContents;
     private final Material item;
-    private boolean update;
+    private final boolean update;
 
     public KitModel(String name, ItemStack[] armorContents, ItemStack[] inventoryContents, String item, boolean update){
         this.name = name;
@@ -27,24 +27,12 @@ public class KitModel {
         return armorContents;
     }
 
-    public void setArmorContents(ItemStack[] armorContents) {
-        this.armorContents = armorContents;
-    }
-
     public ItemStack[] getInventoryContents() {
         return inventoryContents;
     }
 
-    public void setInventoryContents(ItemStack[] inventoryContents) {
-        this.inventoryContents = inventoryContents;
-    }
-
     public boolean isUpdate() {
         return update;
-    }
-
-    public void setUpdate(boolean update) {
-        this.update = update;
     }
 
     public Material getItem() {

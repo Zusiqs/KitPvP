@@ -1,7 +1,6 @@
 package me.jeroenyt.kitpvp.controllers;
 
 import me.jeroenyt.kitpvp.models.KitModel;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -20,10 +19,6 @@ public class KitController {
         kits.add(kit);
     }
 
-    public void removeKit(KitModel kit){
-        kits.removeIf(k -> k.getName().equalsIgnoreCase(kit.getName()));
-    }
-
     public List<KitModel> getKits(){
         return kits;
     }
@@ -36,7 +31,4 @@ public class KitController {
         return kits.stream().anyMatch(k -> k.getName().equalsIgnoreCase(name));
     }
 
-    public boolean needUpdate(String name){
-        return kits.stream().filter(kit -> kit.getName().equalsIgnoreCase(name)).findAny().get().isUpdate();
-    }
 }

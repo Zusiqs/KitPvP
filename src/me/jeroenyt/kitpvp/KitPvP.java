@@ -27,8 +27,6 @@ public class KitPvP extends JavaPlugin {
     public KitHandler kitHandler;
     public UserHandler userHandler;
 
-    private final boolean DEBUG = true;
-
     @Override
     public void onEnable() {
         plugin = this;
@@ -74,6 +72,7 @@ public class KitPvP extends JavaPlugin {
     }
 
     public void log(String message){
+        boolean DEBUG = true;
         if(DEBUG){
             System.out.println(message);
         }

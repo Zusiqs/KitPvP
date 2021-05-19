@@ -29,7 +29,4 @@ public class UserController {
         return users;
     }
 
-    public boolean userExists(UserModel user){
-        return users.stream().anyMatch(player -> player.getUuid().equals(user.getUuid()));
-    }
 }

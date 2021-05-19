@@ -3,7 +3,6 @@ package me.jeroenyt.kitpvp.handlers;
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.models.KitModel;
 import me.jeroenyt.kitpvp.utils.ItemStackSerializer;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;

@@ -45,14 +45,6 @@ public class InventoryController {
         inventoryModels.add(inv);
     }
 
-    public InventoryModel getInventoryModel(String inventory){
-        return inventoryModels.stream().filter(inv -> inv.getName().equalsIgnoreCase(inventory)).findAny().get();
-    }
-
-    public void addItem(String name, ItemStack item){
-        inventoryModels.stream().filter(inv -> inv.getName().equalsIgnoreCase(name)).findAny().get().getItems().add(item);
-    }
-
     public List<Inventory> getInventories() {
         return inventories;
     }

@@ -1,6 +1,5 @@
 package me.jeroenyt.kitpvp.listeners;
 
-import com.mojang.authlib.yggdrasil.response.User;
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.models.UserModel;
 import me.jeroenyt.kitpvp.utils.Utils;
