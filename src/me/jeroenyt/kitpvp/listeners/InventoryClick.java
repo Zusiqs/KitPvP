@@ -13,10 +13,13 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryClick implements Listener {
 
+    private final KitPvP plugin;
+
+    public InventoryClick(KitPvP plugin){
+        this.plugin = plugin;
+    }
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        KitPvP plugin = KitPvP.getInstance();
-
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
 

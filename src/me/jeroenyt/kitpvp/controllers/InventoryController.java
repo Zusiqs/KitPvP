@@ -1,5 +1,6 @@
 package me.jeroenyt.kitpvp.controllers;
 
+import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.inventories.KitSelection;
 import me.jeroenyt.kitpvp.models.InventoryModel;
 import me.jeroenyt.kitpvp.utils.Utils;
@@ -15,12 +16,12 @@ public class InventoryController {
     private final List<InventoryModel> inventoryModels;
     private final List<Inventory> inventories;
 
-    public InventoryController(){
+    public InventoryController(KitPvP plugin){
         inventories = new ArrayList<>();
         inventoryModels = new ArrayList<>();
 
         //init inventory
-        new KitSelection(this);
+        new KitSelection(this, plugin);
 
         createInventories();
     }

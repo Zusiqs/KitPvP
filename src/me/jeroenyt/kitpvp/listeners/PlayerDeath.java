@@ -9,8 +9,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerDeath implements Listener {
 
-    private final KitPvP plugin = KitPvP.getInstance();
+    private final KitPvP plugin;
 
+    public PlayerDeath(KitPvP plugin){
+        this.plugin = plugin;
+    }
     @EventHandler
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity();

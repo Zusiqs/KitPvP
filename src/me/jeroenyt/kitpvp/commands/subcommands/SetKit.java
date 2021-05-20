@@ -9,10 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class SetKit extends SubCommand {
 
-    private final KitPvP plugin = KitPvP.getInstance();
-
+    private KitPvP plugin;
     @Override
-    public void onCommand(Player player, String[] args) {
+    public void onCommand(KitPvP plugin, Player player, String[] args) {
+        this.plugin = plugin;
+
         if(args.length < 2){
             player.sendMessage(Utils.format("&7Verkeerde invoer"));
             return;

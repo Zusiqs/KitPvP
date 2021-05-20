@@ -13,12 +13,11 @@ import java.util.List;
 
 public class KitSelection {
 
-    public KitSelection(InventoryController controller){
+    public KitSelection(InventoryController controller, KitPvP plugin){
         String name = "Kit Selection";
         String title = Utils.format("&fKit Selection");
         List<ItemStack> items = new ArrayList<>();
 
-        KitPvP plugin = KitPvP.getInstance();
         for(KitModel kit : plugin.kitController.getKits()){
             ItemStack item = Utils.createGuiItem(kit.getItem(), "&c" + kit.getName(), Utils.format("&7Klik hier om deze kit te kiezen"));
             items.add(item);

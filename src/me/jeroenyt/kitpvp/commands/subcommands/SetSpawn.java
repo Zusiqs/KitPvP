@@ -7,10 +7,12 @@ import org.bukkit.entity.Player;
 
 public class SetSpawn extends SubCommand {
 
-    private final KitPvP plugin = KitPvP.getInstance();
+    private KitPvP plugin;
 
     @Override
-    public void onCommand(Player player, String[] args) {
+    public void onCommand(KitPvP plugin, Player player, String[] args) {
+        this.plugin = plugin;
+
         plugin.serverController.getServer().setSpawn(player.getLocation());
         player.sendMessage(Utils.format("&7U heeft de spawn met succes gezet"));
 

@@ -11,10 +11,12 @@ import java.util.Arrays;
 
 public class KitHandler {
 
-    private final KitPvP plugin = KitPvP.getInstance();
-    private final DatabaseHandler dbHandler = plugin.databaseHandler;
+    private final KitPvP plugin;
+    private final DatabaseHandler dbHandler;
 
-    public KitHandler(){
+    public KitHandler(KitPvP plugin){
+        this.plugin = plugin;
+        dbHandler = plugin.databaseHandler;
         loadKits();
     }
     public boolean kitExist(String kit){

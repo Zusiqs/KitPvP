@@ -17,9 +17,13 @@ import java.util.List;
 
 public class Board {
 
-    private final KitPvP plugin = KitPvP.getInstance();
+    private final KitPvP plugin;
+    private final Configuration config;
 
-    public Board(){
+    public Board(KitPvP plugin){
+        this.plugin = plugin;
+        this.config = plugin.getConfig();
+
         new BukkitRunnable()
         {
             public void run()
@@ -31,7 +35,6 @@ public class Board {
             }
         }.runTaskTimer(plugin, 0L, 30L);
     }
-    private final Configuration config = plugin.getConfig();
 
     public String getEntryFromScore(Objective o, int score) {
         if (o == null)
@@ -64,12 +67,7 @@ public class Board {
     }
 
 
-    public void showScoreboard(Player p) {
-        if (p.getScoreboard().equals(p.getServer().getScoreboardManager().getMainScoreboard())) {
-            p.setScoreboard(p.getServer().getScoreboardManager().getNewScoreboard());
-        }
-        Scoreboard score = p.getScoreboard();
-
+    private void setupDefaults(){
         if (!config.contains("scoreboard.title")) {
             config.set("scoreboard.title", Utils.format("&c&lKitPvP"));
         }
@@ -90,6 +88,16 @@ public class Board {
         }
 
         plugin.saveConfig();
+    }
+
+    public void showScoreboard(Player p) {
+        if (p.getScoreboard().equals(p.getServer().getScoreboardManager().getMainScoreboard())) {
+            p.setScoreboard(p.getServer().getScoreboardManager().getNewScoreboard());
+        }
+        Scoreboard score = p.getScoreboard();
+
+        setupDefaults();
+
         Objective objective = score.getObjective(p.getName()) == null ? score.registerNewObjective(p.getName(), "dummy") :
                 score.getObjective(p.getName());
         objective.setDisplayName(plugin.getConfig().getString(Utils.format("scoreboard.title")));

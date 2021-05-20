@@ -62,7 +62,7 @@ public class CommandManager implements CommandExecutor {
             }
 
             try {
-                target.onCommand(player, args);
+                target.onCommand(plugin, player, args);
                 return true;
             } catch (Exception e) {
                 player.sendMessage(Utils.format("&7Er is iets fout gegaan!"));

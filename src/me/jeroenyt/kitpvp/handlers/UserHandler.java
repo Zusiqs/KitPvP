@@ -10,9 +10,13 @@ import java.util.UUID;
 
 public class UserHandler {
 
-    private final KitPvP plugin = KitPvP.getInstance();
+    private final KitPvP plugin;
 
-    public boolean playerExists(UUID uuid) {
+    public UserHandler(KitPvP plugin){
+        this.plugin = plugin;
+    }
+
+    private boolean playerExists(UUID uuid) {
         try {
             ResultSet resultSet = plugin.databaseHandler.sqlQuery("SELECT * FROM users WHERE uuid=?", Arrays.asList(uuid.toString()));
             assert resultSet != null;
@@ -33,7 +37,7 @@ public class UserHandler {
                 "0", "0"));
     }
 
-    public UserModel getPlayer(final UUID uuid){
+    private UserModel getPlayer(final UUID uuid){
         try {
             ResultSet result = plugin.databaseHandler.sqlQuery("SELECT * FROM users WHERE uuid=?", Arrays.asList(uuid.toString()));
             if (result != null) {
@@ -50,6 +54,13 @@ public class UserHandler {
         return null;
     }
 
+    public void loadPlayer(UUID uuid){
+        if(plugin.userHandler.playerExists(uuid)){
+            plugin.userController.addUser(plugin.userHandler.getPlayer(uuid));
+        }else{
+            plugin.userController.addUser(new UserModel(uuid, 0,0));
+        }
+    }
     public void savePlayer(UUID uuid){
         UserModel user = plugin.userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
 

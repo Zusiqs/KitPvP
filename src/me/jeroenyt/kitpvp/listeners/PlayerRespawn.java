@@ -10,8 +10,11 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class PlayerRespawn implements Listener {
 
-    private final KitPvP plugin = KitPvP.getInstance();
+    private final KitPvP plugin;
 
+    public PlayerRespawn(KitPvP plugin){
+        this.plugin = plugin;
+    }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onRespawn(PlayerRespawnEvent event){
         Player player = event.getPlayer();

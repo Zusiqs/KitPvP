@@ -12,9 +12,14 @@ import org.bukkit.inventory.Inventory;
 
 public class PlayerInteract implements Listener {
 
+    private final KitPvP plugin;
+
+    public PlayerInteract(KitPvP plugin){
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        KitPvP plugin = KitPvP.getInstance();
         Player player = event.getPlayer();
 
         if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) return;
