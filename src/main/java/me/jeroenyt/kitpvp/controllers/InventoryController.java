@@ -36,12 +36,12 @@ public class InventoryController {
         return inventories;
     }
 
-    public InventoryController(KitPvP plugin) {
+    public InventoryController(KitController kitController) {
         inventories = new ArrayList<>();
         inventoryModels = new ArrayList<>();
 
         //init inventory
-        new KitSelection(this, plugin);
+        new KitSelection(this, kitController);
 
         createInventories();
     }

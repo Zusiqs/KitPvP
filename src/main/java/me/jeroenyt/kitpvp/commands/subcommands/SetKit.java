@@ -2,6 +2,7 @@ package me.jeroenyt.kitpvp.commands.subcommands;
 
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.commands.SubCommand;
+import me.jeroenyt.kitpvp.controllers.KitController;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,12 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class SetKit extends SubCommand {
 
-    private KitPvP plugin;
+    private final KitPvP plugin = KitPvP.getInstance();
+
+    private KitController kitController;
+    public SetKit(KitController kitController){
+        this.kitController = kitController;
+    }
 
     @Override
-    public void onCommand(KitPvP plugin, Player player, String[] args) {
-        this.plugin = plugin;
-
+    public void onCommand(Player player, String[] args) {
         if(args.length < 2) {
             player.sendMessage(Utils.format("&7Verkeerde invoer"));
             return;
@@ -29,10 +33,10 @@ public class SetKit extends SubCommand {
         ItemStack[] armor = player.getInventory().getArmorContents();
         ItemStack[] inventory = player.getInventory().getContents();
 
-        if(plugin.kitController.kitExists(name)) {
+        if(kitController.kitExists(name)) {
             player.sendMessage(Utils.format("&7De kit: &c" + name + " &7bestaat al"));
         } else {
-            plugin.kitController.addKit(name, armor, inventory, player.getItemInHand().getType().toString(), true);
+            kitController.addKit(name, armor, inventory, player.getItemInHand().getType(), true);
             player.sendMessage(Utils.format("&7Kit met succes aangemaakt"));
         }
     }

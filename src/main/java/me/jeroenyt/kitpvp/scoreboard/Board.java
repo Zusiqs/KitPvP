@@ -2,6 +2,7 @@ package me.jeroenyt.kitpvp.scoreboard;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.jeroenyt.kitpvp.KitPvP;
+import me.jeroenyt.kitpvp.controllers.UserController;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
@@ -19,10 +20,12 @@ public class Board {
 
     private final KitPvP plugin;
     private final Configuration config;
+    private final UserController userController;
 
-    public Board(KitPvP plugin) {
+    public Board(KitPvP plugin, UserController userController) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
+        this.userController = userController;
 
         new BukkitRunnable()
         {
@@ -107,8 +110,8 @@ public class Board {
 
         for(int i = lines.size()-1; i >= 0; i--) {
             String line = lines.get(i)
-                    .replaceAll("%kills%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getKills()))
-                    .replaceAll("%deaths%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getDeaths()));
+                    .replaceAll("%kills%", Integer.toString(userController.getUser(p.getUniqueId()).getKills()))
+                    .replaceAll("%deaths%", Integer.toString(userController.getUser(p.getUniqueId()).getDeaths()));
 
             //set with placeholders
             if(Bukkit.getPluginManager().isPluginEnabled("PlaceHolderAPI")) {

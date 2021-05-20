@@ -1,6 +1,5 @@
 package me.jeroenyt.kitpvp;
 
-import com.zaxxer.hikari.HikariDataSource;
 import me.jeroenyt.kitpvp.commands.CommandManager;
 import me.jeroenyt.kitpvp.controllers.*;
 import me.jeroenyt.kitpvp.handlers.*;
@@ -12,21 +11,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.sql.SQLException;
 
 public class KitPvP extends JavaPlugin {
 
-    public UserController userController;
-    public KitController kitController;
-    public ServerController serverController;
-    public InventoryController inventoryController;
-    public DatabaseInfoController databaseInfoController;
+    private DatabaseHandler databaseHandler;
+    private KitHandler kitHandler;
+    private UserHandler userHandler;
 
     public CommandManager commandManager;
 
-    public DatabaseHandler databaseHandler;
-    public KitHandler kitHandler;
-    public UserHandler userHandler;
+    private static KitPvP instance;
+
+    public static KitPvP getInstance() {
+        return instance;
+    }
 
     private void loadPlayers() {
         if(Bukkit.getOnlinePlayers().isEmpty()) return;
@@ -44,14 +42,14 @@ public class KitPvP extends JavaPlugin {
         });
     }
 
-    private static KitPvP plugin;
     @Override
     public void onEnable() {
-        plugin = this;
         init();
 
+        instance = this;
+
         //database information
-        databaseInfoController = new DatabaseInfoController(this);
+        DatabaseInfoController databaseInfoController = new DatabaseInfoController(this);
 
         DatabaseInfoModel dbInfo = databaseInfoController.getDatabaseInfo();
 
@@ -61,39 +59,35 @@ public class KitPvP extends JavaPlugin {
         databaseHandler.connect();
 
         //set up user and kit controllers
-        userController = new UserController();
-        kitController = new KitController();
+        UserController userController = new UserController();
+        KitController kitController = new KitController();
 
         //kits and users
-        userHandler = new UserHandler(this);
-        kitHandler = new KitHandler(this);
+        userHandler = new UserHandler(databaseHandler, userController);
+        kitHandler = new KitHandler(databaseHandler, kitController);
 
         //server constants
-        serverController = new ServerController(this);
+        ServerController serverController = new ServerController(this);
 
         //inventories
-        inventoryController = new InventoryController(this);
+        InventoryController inventoryController = new InventoryController(kitController);
 
         //setup commands
-        commandManager = new CommandManager(this);
+        commandManager = new CommandManager(this, serverController, kitController);
 
         loadPlayers();
 
-        new Board(this);
+        new Board(this, userController);
 
         //listeners
-        Bukkit.getPluginManager().registerEvents(new PlayerJoin(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerQuit(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerDeath(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerRespawn(this), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryClick(this), this);
-        Bukkit.getPluginManager().registerEvents(new PlayerInteract(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoin(userHandler, serverController), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuit(userHandler, userController), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeath(this, userController), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRespawn(serverController), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClick(kitController), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteract(inventoryController), this);
         Bukkit.getPluginManager().registerEvents(new BlockEvents(), this);
 
-    }
-
-    public static KitPvP getInstance(){
-        return plugin;
     }
 
     @Override

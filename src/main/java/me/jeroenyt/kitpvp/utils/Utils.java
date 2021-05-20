@@ -16,7 +16,7 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', input);
     }
 
-    public static ItemStack createGuiItem(final Material material, final String name, final String... lore) {
+    public static ItemStack createItem(final Material material, final String name, final String... lore) {
         final ItemStack item = new ItemStack(material, 1);
         final ItemMeta meta = item.getItemMeta();
 
@@ -32,6 +32,6 @@ public class Utils {
 
         inventory.clear();
         inventory.setArmorContents(new ItemStack[inventory.getArmorContents().length]);
-        inventory.setItem(4, createGuiItem(Material.WATCH, "&cKit Selection", Utils.format("Hiermee kan je kits kiezen")));
+        inventory.setItem(4, createItem(Material.WATCH, "&cKit Selection", Utils.format("Hiermee kan je kits kiezen")));
     }
 }

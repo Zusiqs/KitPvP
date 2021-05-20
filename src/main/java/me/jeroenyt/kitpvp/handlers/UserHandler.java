@@ -1,6 +1,7 @@
 package me.jeroenyt.kitpvp.handlers;
 
 import me.jeroenyt.kitpvp.KitPvP;
+import me.jeroenyt.kitpvp.controllers.UserController;
 import me.jeroenyt.kitpvp.models.UserModel;
 
 import javax.sql.rowset.CachedRowSet;
@@ -12,15 +13,17 @@ import java.util.UUID;
 
 public class UserHandler {
 
-    private final KitPvP plugin;
+    private final DatabaseHandler databaseHandler;
+    private final UserController userController;
 
-    public UserHandler(KitPvP plugin) {
-        this.plugin = plugin;
+    public UserHandler(DatabaseHandler databaseHandler, UserController userController) {
+        this.databaseHandler = databaseHandler;
+        this.userController = userController;
     }
 
     private boolean playerExists(UUID uuid) {
-        PreparedStatement statement = plugin.databaseHandler.prepareStatement("SELECT * FROM users WHERE uuid=?", uuid.toString());
-        CachedRowSet result = plugin.databaseHandler.query(statement);
+        PreparedStatement statement = databaseHandler.prepareStatement("SELECT * FROM users WHERE uuid=?", uuid.toString());
+        CachedRowSet result = databaseHandler.query(statement);
         if (result != null) {
             return true;
         }
@@ -30,16 +33,16 @@ public class UserHandler {
     }
 
     private void createPlayer(final UUID uuid) {
-        PreparedStatement statement = plugin.databaseHandler.prepareStatement("INSERT INTO users " +
+        PreparedStatement statement = databaseHandler.prepareStatement("INSERT INTO users " +
                 "(uuid,kills,deaths) VALUES (?,?,?)",uuid.toString(),
                 "0", "0");
-        plugin.databaseHandler.execute(statement);
+        databaseHandler.execute(statement);
     }
 
     private UserModel getPlayer(final UUID uuid) {
         try {
-            PreparedStatement statement = plugin.databaseHandler.prepareStatement("SELECT * FROM users WHERE uuid=?", uuid.toString());
-            CachedRowSet result = plugin.databaseHandler.query(statement);
+            PreparedStatement statement = databaseHandler.prepareStatement("SELECT * FROM users WHERE uuid=?", uuid.toString());
+            CachedRowSet result = databaseHandler.query(statement);
             int kills = result.getInt("kills");
             int deaths = result.getInt("deaths");
 
@@ -52,17 +55,17 @@ public class UserHandler {
     }
 
     public void loadPlayer(UUID uuid) {
-        if(plugin.userHandler.playerExists(uuid)) {
-            plugin.userController.addUser(plugin.userHandler.getPlayer(uuid));
+        if(playerExists(uuid)) {
+            userController.addUser(getPlayer(uuid));
         }else{
-            plugin.userController.addUser(new UserModel(uuid, 0,0));
+            userController.addUser(new UserModel(uuid, 0,0));
         }
     }
     public void savePlayer(UUID uuid) {
-        UserModel user = plugin.userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
+        UserModel user = userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
 
-        PreparedStatement statement = plugin.databaseHandler.prepareStatement("UPDATE users SET uuid=?, kills=?, deaths=? WHERE uuid=?"
+        PreparedStatement statement = databaseHandler.prepareStatement("UPDATE users SET uuid=?, kills=?, deaths=? WHERE uuid=?"
                 , uuid.toString(), Integer.toString(user.getKills()), Integer.toString(user.getDeaths()), uuid.toString());
-        plugin.databaseHandler.execute(statement);
+        databaseHandler.execute(statement);
     }
 }

@@ -1,6 +1,7 @@
 package me.jeroenyt.kitpvp.controllers;
 
 import me.jeroenyt.kitpvp.models.KitModel;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public class KitController {
         kits = new ArrayList<>();
     }
 
-    public void addKit(String name, ItemStack[] armor, ItemStack[] inventory, String item, boolean update) {
-        KitModel kit = new KitModel(name, armor, inventory, item, update);
+    public void addKit(String name, ItemStack[] armor, ItemStack[] inventory, Material material, boolean update) {
+        KitModel kit = new KitModel(name, armor, inventory, material, update);
         kits.add(kit);
     }
 

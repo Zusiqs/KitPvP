@@ -34,7 +34,6 @@ public class DatabaseHandler {
         config.setUsername(username);
         config.setPassword(password);
 
-        config.setLeakDetectionThreshold(60000);
         config.setMaximumPoolSize(10);
         config.setMinimumIdle(0);
 

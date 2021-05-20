@@ -1,6 +1,7 @@
 package me.jeroenyt.kitpvp.listeners;
 
 import me.jeroenyt.kitpvp.KitPvP;
+import me.jeroenyt.kitpvp.controllers.InventoryController;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteract implements Listener {
 
-    private final KitPvP plugin;
+    private final InventoryController inventoryController;
 
-    public PlayerInteract(KitPvP plugin) {
-        this.plugin = plugin;
+    public PlayerInteract(InventoryController inventoryController) {
+        this.inventoryController = inventoryController;
     }
 
     @EventHandler
@@ -30,7 +31,7 @@ public class PlayerInteract implements Listener {
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
             if (item.getItemMeta().getDisplayName().equalsIgnoreCase(Utils.format("&cKit Selection"))) {
 
-                Inventory inv = plugin.inventoryController.getInventory("&fKit Selection");
+                Inventory inv = inventoryController.getInventory("&fKit Selection");
                 player.openInventory(inv);
             }
         }

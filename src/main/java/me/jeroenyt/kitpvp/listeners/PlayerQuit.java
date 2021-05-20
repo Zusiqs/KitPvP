@@ -1,6 +1,8 @@
 package me.jeroenyt.kitpvp.listeners;
 
 import me.jeroenyt.kitpvp.KitPvP;
+import me.jeroenyt.kitpvp.controllers.UserController;
+import me.jeroenyt.kitpvp.handlers.UserHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,10 +12,12 @@ import java.util.UUID;
 
 public class PlayerQuit implements Listener {
 
-    private final KitPvP plugin;
+    private final UserHandler userHandler;
+    private final UserController userController;
 
-    public PlayerQuit(KitPvP plugin) {
-        this.plugin = plugin;
+    public PlayerQuit(UserHandler userHandler, UserController userController) {
+        this.userHandler = userHandler;
+        this.userController = userController;
     }
 
     @EventHandler
@@ -24,7 +28,7 @@ public class PlayerQuit implements Listener {
     }
 
     private void removePlayer(UUID uuid) {
-        plugin.userHandler.savePlayer(uuid);
-        plugin.userController.removeUser(uuid);
+        userHandler.savePlayer(uuid);
+        userController.removeUser(uuid);
     }
 }

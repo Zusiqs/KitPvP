@@ -2,6 +2,7 @@ package me.jeroenyt.kitpvp.inventories;
 
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.controllers.InventoryController;
+import me.jeroenyt.kitpvp.controllers.KitController;
 import me.jeroenyt.kitpvp.models.InventoryModel;
 import me.jeroenyt.kitpvp.models.KitModel;
 import me.jeroenyt.kitpvp.utils.Utils;
@@ -13,18 +14,18 @@ import java.util.List;
 
 public class KitSelection {
 
-    public KitSelection(InventoryController controller, KitPvP plugin) {
+    public KitSelection(InventoryController controller, KitController kitController) {
         String name = "Kit Selection";
         String title = Utils.format("&fKit Selection");
         List<ItemStack> items = new ArrayList<>();
 
-        for(KitModel kit : plugin.kitController.getKits()) {
-            ItemStack item = Utils.createGuiItem(kit.getItem(), "&c" + kit.getName(), Utils.format("&7Klik hier om deze kit te kiezen"));
+        for(KitModel kit : kitController.getKits()) {
+            ItemStack item = Utils.createItem(kit.getItem(), "&c" + kit.getName(), Utils.format("&7Klik hier om deze kit te kiezen"));
             items.add(item);
         }
 
         if(items.size() < 1) {
-            ItemStack item = Utils.createGuiItem(Material.BEDROCK, "&cGeen kits beschikbaar", Utils.format("&7Klik hier om deze kit te kiezen"));
+            ItemStack item = Utils.createItem(Material.BEDROCK, "&cGeen kits beschikbaar", Utils.format("&7Klik hier om deze kit te kiezen"));
             items.add(item);
         }
         InventoryModel inventory = new InventoryModel(name, title, items);

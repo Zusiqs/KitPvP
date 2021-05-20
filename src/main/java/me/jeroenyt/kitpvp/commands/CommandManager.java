@@ -3,6 +3,8 @@ package me.jeroenyt.kitpvp.commands;
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.commands.subcommands.SetKit;
 import me.jeroenyt.kitpvp.commands.subcommands.SetSpawn;
+import me.jeroenyt.kitpvp.controllers.KitController;
+import me.jeroenyt.kitpvp.controllers.ServerController;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,10 +17,14 @@ public class CommandManager implements CommandExecutor {
 
     private final ArrayList<SubCommand> commands;
     private final KitPvP plugin;
+    private KitController kitController;
+    private ServerController serverController;
 
-    public CommandManager(KitPvP plugin) {
+    public CommandManager(KitPvP plugin, ServerController serverController, KitController kitController) {
         commands = new ArrayList<>();
         this.plugin = plugin;
+        this.serverController = serverController;
+        this.kitController = kitController;
         setup();
     }
 
@@ -30,8 +36,8 @@ public class CommandManager implements CommandExecutor {
     public void setup() {
         plugin.getCommand(main).setExecutor(this);
 
-        this.commands.add(new SetSpawn());
-        this.commands.add(new SetKit());
+        this.commands.add(new SetSpawn(plugin, serverController));
+        this.commands.add(new SetKit(kitController));
     }
 
     @Override
@@ -62,7 +68,7 @@ public class CommandManager implements CommandExecutor {
             }
 
             try {
-                target.onCommand(plugin, player, args);
+                target.onCommand(player, args);
                 return true;
             } catch (Exception e) {
                 player.sendMessage(Utils.format("&7Er is iets fout gegaan!"));
