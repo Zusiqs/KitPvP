@@ -2,9 +2,7 @@ package me.jeroenyt.kitpvp;
 
 import me.jeroenyt.kitpvp.commands.CommandManager;
 import me.jeroenyt.kitpvp.controllers.*;
-import me.jeroenyt.kitpvp.handlers.DatabaseHandler;
-import me.jeroenyt.kitpvp.handlers.KitHandler;
-import me.jeroenyt.kitpvp.handlers.UserHandler;
+import me.jeroenyt.kitpvp.handlers.*;
 import me.jeroenyt.kitpvp.listeners.*;
 import me.jeroenyt.kitpvp.scoreboard.Board;
 import org.bukkit.Bukkit;
