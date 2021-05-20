@@ -26,11 +26,6 @@ public class SetSpawn extends SubCommand {
     }
 
     @Override
-    public String info() {
-        return "";
-    }
-
-    @Override
     public String[] aliases() {
         return new String[0];
     }

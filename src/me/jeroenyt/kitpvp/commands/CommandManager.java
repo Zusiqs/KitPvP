@@ -16,7 +16,7 @@ public class CommandManager implements CommandExecutor {
     private final ArrayList<SubCommand> commands;
     private final KitPvP plugin;
 
-    public CommandManager(KitPvP plugin){
+    public CommandManager(KitPvP plugin) {
         commands = new ArrayList<>();
         this.plugin = plugin;
         setup();
@@ -27,7 +27,7 @@ public class CommandManager implements CommandExecutor {
     public String setspawn = "setspawn";
     public String setkit = "setkit";
 
-    public void setup(){
+    public void setup() {
         plugin.getCommand(main).setExecutor(this);
 
         this.commands.add(new SetSpawn());
@@ -36,7 +36,7 @@ public class CommandManager implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(!(sender instanceof Player)){
+        if(!(sender instanceof Player)) {
             sender.sendMessage(Utils.format("&cJe bent geen speler"));
             return true;
         }
@@ -73,7 +73,7 @@ public class CommandManager implements CommandExecutor {
         return false;
     }
 
-    private SubCommand get(String name){
+    private SubCommand get(String name) {
 
         for (SubCommand scommand : this.commands) {
             if (scommand.name().equals(name)) {

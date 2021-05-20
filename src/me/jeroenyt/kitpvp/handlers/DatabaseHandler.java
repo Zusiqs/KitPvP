@@ -11,11 +11,19 @@ public class DatabaseHandler {
 
     private Connection connection;
 
+    private Connection getConnection() {
+        return connection;
+    }
+
+    private void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     public DatabaseHandler(KitPvP plugin) {
         DatabaseInfoModel dbInfo = plugin.databaseInfoController.getDatabaseInfo();
 
-        try {
-            synchronized (this){
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try {
                 if (getConnection() != null && !getConnection().isClosed() && getConnection().isValid(0)) {
                     return;
                 }
@@ -24,21 +32,15 @@ public class DatabaseHandler {
                         + dbInfo.getDatabase() + "?autoReconnect=true",dbInfo.getUser(), dbInfo.getPassword()));
 
                 Bukkit.getConsoleSender().sendMessage("Mysql connected");
+
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        });
+
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    public ResultSet sqlQuery(String sql, List<String> values){
+    public ResultSet sqlQuery(String sql, List<String> values) {
         try {
 
             PreparedStatement query = getConnection().prepareStatement(sql);
@@ -57,7 +59,7 @@ public class DatabaseHandler {
                 }
             }
             return query.executeQuery();
-        }catch(SQLException e){
+        }catch(SQLException e) {
             e.printStackTrace();
         }
         return null;

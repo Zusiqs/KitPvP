@@ -10,11 +10,12 @@ import org.bukkit.inventory.ItemStack;
 public class SetKit extends SubCommand {
 
     private KitPvP plugin;
+
     @Override
     public void onCommand(KitPvP plugin, Player player, String[] args) {
         this.plugin = plugin;
 
-        if(args.length < 2){
+        if(args.length < 2) {
             player.sendMessage(Utils.format("&7Verkeerde invoer"));
             return;
         }
@@ -39,11 +40,6 @@ public class SetKit extends SubCommand {
     @Override
     public String name() {
         return plugin.commandManager.setkit;
-    }
-
-    @Override
-    public String info() {
-        return "";
     }
 
     @Override

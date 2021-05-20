@@ -5,7 +5,7 @@ import me.jeroenyt.kitpvp.controllers.*;
 import me.jeroenyt.kitpvp.handlers.DatabaseHandler;
 import me.jeroenyt.kitpvp.handlers.KitHandler;
 import me.jeroenyt.kitpvp.handlers.UserHandler;
-import me.jeroenyt.kitpvp.listeners.InitializationListeners;
+import me.jeroenyt.kitpvp.listeners.*;
 import me.jeroenyt.kitpvp.scoreboard.Board;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -26,6 +26,20 @@ public class KitPvP extends JavaPlugin {
     public DatabaseHandler databaseHandler;
     public KitHandler kitHandler;
     public UserHandler userHandler;
+
+    private void loadPlayers() {
+        if(Bukkit.getOnlinePlayers().isEmpty()) return;
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            userHandler.loadPlayer(player.getUniqueId());
+        }
+    }
+
+    private void init() {
+        if (!new File(this.getDataFolder(), "config.yml").exists()) {
+            this.saveDefaultConfig();
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -54,13 +68,18 @@ public class KitPvP extends JavaPlugin {
         //setup commands
         commandManager = new CommandManager(this);
 
-        //initialize listeners
-        new InitializationListeners(this);
-
-        loadPlayer();
+        loadPlayers();
 
         new Board(this);
 
+        //listeners
+        Bukkit.getPluginManager().registerEvents(new PlayerJoin(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuit(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeath(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRespawn(this), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryClick(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerInteract(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockEvents(), this);
     }
 
     @Override
@@ -68,23 +87,11 @@ public class KitPvP extends JavaPlugin {
         kitHandler.saveKits();
     }
 
-    public void log(String message){
+    public void log(String message) {
         boolean DEBUG = true;
-        if(DEBUG){
+        if(DEBUG) {
             System.out.println(message);
         }
     }
 
-    private void loadPlayer(){
-        if(Bukkit.getOnlinePlayers().isEmpty()) return;
-
-        for(Player player : Bukkit.getOnlinePlayers()){
-            userHandler.loadPlayer(player.getUniqueId());
-        }
-    }
-    private void init(){
-        if (!new File(this.getDataFolder(), "config.yml").exists()) {
-            this.saveDefaultConfig();
-        }
-    }
 }

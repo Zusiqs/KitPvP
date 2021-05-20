@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Utils {
 
-    public static String format(String input){
+    public static String format(String input) {
         return ChatColor.translateAlternateColorCodes('&', input);
     }
 
@@ -26,7 +26,7 @@ public class Utils {
         return item;
     }
 
-    public static void giveStartItems(Player player){
+    public static void giveStartItems(Player player) {
         player.getInventory().clear();
         player.getInventory().setArmorContents(new ItemStack[player.getInventory().getArmorContents().length]);
 

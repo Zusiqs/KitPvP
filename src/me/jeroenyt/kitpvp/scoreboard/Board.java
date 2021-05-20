@@ -20,7 +20,7 @@ public class Board {
     private final KitPvP plugin;
     private final Configuration config;
 
-    public Board(KitPvP plugin){
+    public Board(KitPvP plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
 
@@ -36,7 +36,7 @@ public class Board {
         }.runTaskTimer(plugin, 0L, 30L);
     }
 
-    public String getEntryFromScore(Objective o, int score) {
+    private String getEntryFromScore(Objective o, int score) {
         if (o == null)
             return null;
         if (!hasScoreTaken(o, score))
@@ -48,7 +48,7 @@ public class Board {
         return null;
     }
 
-    public boolean hasScoreTaken(Objective o, int score) {
+    private boolean hasScoreTaken(Objective o, int score) {
         for (String s : o.getScoreboard().getEntries()) {
             if (o.getScore(s).getScore() == score)
                 return true;
@@ -56,7 +56,7 @@ public class Board {
         return false;
     }
 
-    public void replaceScore(Objective o, int score, String name) {
+    private void replaceScore(Objective o, int score, String name) {
         if (hasScoreTaken(o, score)) {
             if (getEntryFromScore(o, score).equalsIgnoreCase(name))
                 return;
@@ -67,7 +67,7 @@ public class Board {
     }
 
 
-    private void setupDefaults(){
+    private void setupDefaults() {
         if (!config.contains("scoreboard.title")) {
             config.set("scoreboard.title", Utils.format("&c&lKitPvP"));
         }
@@ -90,7 +90,7 @@ public class Board {
         plugin.saveConfig();
     }
 
-    public void showScoreboard(Player p) {
+    private void showScoreboard(Player p) {
         if (p.getScoreboard().equals(p.getServer().getScoreboardManager().getMainScoreboard())) {
             p.setScoreboard(p.getServer().getScoreboardManager().getNewScoreboard());
         }
@@ -105,7 +105,7 @@ public class Board {
         int count = 0;
         List<String> lines = config.getStringList("scoreboard.lines");
 
-        for(int i = lines.size()-1; i >= 0; i--){
+        for(int i = lines.size()-1; i >= 0; i--) {
             String line = lines.get(i)
                     .replaceAll("%kills%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getKills()))
                     .replaceAll("%deaths%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getDeaths()));

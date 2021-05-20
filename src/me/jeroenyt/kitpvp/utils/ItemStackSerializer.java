@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemStackSerializer {
-    public static String serialize(ItemStack item){
-        if(item == null){
+    public static String serialize(ItemStack item) {
+        if(item == null) {
             item = new ItemStack(Material.AIR);
         }
         StringBuilder builder = new StringBuilder();
@@ -35,14 +35,14 @@ public class ItemStackSerializer {
         if(owner != null) builder.append(" owner:" + owner);
         return builder.toString();
     }
-    public static ItemStack deserialize(String serializedItem){
+    public static ItemStack deserialize(String serializedItem) {
         String[] strings = serializedItem.split(" ");
         Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
         String[] args;
         ItemStack item = new ItemStack(Material.AIR);
         for (String str: strings) {
             args = str.split(":");
-            if(Material.matchMaterial(args[0]) != null && item.getType() == Material.AIR){
+            if(Material.matchMaterial(args[0]) != null && item.getType() == Material.AIR) {
                 item.setType(Material.matchMaterial(args[0]));
                 if(args.length == 2) item.setDurability(Short.parseShort(args[1]));
                 break;
@@ -51,27 +51,27 @@ public class ItemStackSerializer {
         if (item.getType() == Material.AIR) {
             return item;
         }
-        for(String str:strings){
+        for(String str:strings) {
             args = str.split(":", 2);
             if(isNumber(args[0])) item.setAmount(Integer.parseInt(args[0]));
             if(args.length == 1) continue;
-            if(args[0].equalsIgnoreCase("name")){
+            if(args[0].equalsIgnoreCase("name")) {
                 setName(item, ChatColor.translateAlternateColorCodes('&', args[1]));
                 continue;
             }
-            if(args[0].equalsIgnoreCase("lore")){
+            if(args[0].equalsIgnoreCase("lore")) {
                 setLore(item, ChatColor.translateAlternateColorCodes('&', args[1]));
                 continue;
             }
-            if(args[0].equalsIgnoreCase("rgb")){
+            if(args[0].equalsIgnoreCase("rgb")) {
                 setArmorColor(item, args[1]);
                 continue;
             }
-            if(args[0].equalsIgnoreCase("owner")){
+            if(args[0].equalsIgnoreCase("owner")) {
                 setOwner(item, args[1]);
                 continue;
             }
-            if(Enchantment.getByName(args[0].toUpperCase()) != null){
+            if(Enchantment.getByName(args[0].toUpperCase()) != null) {
                 enchants.put(Enchantment.getByName(args[0].toUpperCase()), Integer.parseInt(args[1]));
                 continue;
             }
@@ -79,51 +79,51 @@ public class ItemStackSerializer {
         item.addUnsafeEnchantments(enchants);
         return item.getType().equals(Material.AIR) ? null : item;
     }
-    private static String getOwner(ItemStack item){
+    private static String getOwner(ItemStack item) {
         if(!(item.getItemMeta() instanceof SkullMeta)) return null;
         return ((SkullMeta)item.getItemMeta()).getOwner();
     }
-    private static void setOwner(ItemStack item, String owner){
+    private static void setOwner(ItemStack item, String owner) {
         try{
             SkullMeta meta = (SkullMeta) item.getItemMeta();
             meta.setOwner(owner);
             item.setItemMeta(meta);
-        }catch(Exception exception){
+        }catch(Exception exception) {
             return;
         }
     }
-    private static String getName(ItemStack item){
+    private static String getName(ItemStack item) {
         if(!item.hasItemMeta()) return null;
         if(!item.getItemMeta().hasDisplayName()) return null;
         return item.getItemMeta().getDisplayName().replace(" ", "_").replace(ChatColor.COLOR_CHAR, '&');
     }
-    private static void setName(ItemStack item, String name){
+    private static void setName(ItemStack item, String name) {
         name = name.replace("_", " ");
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
         item.setItemMeta(meta);
     }
-    private static String getLore(ItemStack item){
+    private static String getLore(ItemStack item) {
         if(!item.hasItemMeta()) return null;
         if(!item.getItemMeta().hasLore()) return null;
         StringBuilder builder = new StringBuilder();
         List<String> lore = item.getItemMeta().getLore();
-        for(int ind = 0;ind<lore.size();ind++){
+        for(int ind = 0;ind<lore.size();ind++) {
             builder.append((ind > 0 ? "|" : "") + lore.get(ind).replace(" ", "_").replace(ChatColor.COLOR_CHAR, '&'));
         }
         return builder.toString();
     }
-    private static void setLore(ItemStack item, String lore){
+    private static void setLore(ItemStack item, String lore) {
         lore = lore.replace("_", " ");
         ItemMeta meta = item.getItemMeta();
         meta.setLore(Arrays.asList(lore.split("\\|")));
         item.setItemMeta(meta);
     }
-    private static Color getArmorColor(ItemStack item){
+    private static Color getArmorColor(ItemStack item) {
         if(!(item.getItemMeta() instanceof LeatherArmorMeta)) return null;
         return ((LeatherArmorMeta)item.getItemMeta()).getColor();
     }
-    private static void setArmorColor(ItemStack item, String str){
+    private static void setArmorColor(ItemStack item, String str) {
         try{
             String[] colors = str.split("\\|");
             int red = Integer.parseInt(colors[0]);
@@ -132,14 +132,14 @@ public class ItemStackSerializer {
             LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
             meta.setColor(Color.fromRGB(red, green, blue));
             item.setItemMeta(meta);
-        }catch(Exception exception){
+        }catch(Exception exception) {
             return;
         }
     }
-    private static boolean isNumber(String str){
+    private static boolean isNumber(String str) {
         try{
             Integer.parseInt(str);
-        }catch(NumberFormatException exception){
+        }catch(NumberFormatException exception) {
             return false;
         }
         return true;

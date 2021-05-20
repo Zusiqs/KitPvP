@@ -14,12 +14,12 @@ public class PlayerInteract implements Listener {
 
     private final KitPvP plugin;
 
-    public PlayerInteract(KitPvP plugin){
+    public PlayerInteract(KitPvP plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
+    private void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
         if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) return;

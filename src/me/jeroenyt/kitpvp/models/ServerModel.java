@@ -6,7 +6,7 @@ public class ServerModel {
 
     private Location spawn;
 
-    public ServerModel(Location spawn){
+    public ServerModel(Location spawn) {
         this.spawn = spawn;
     }
 

@@ -10,7 +10,7 @@ public class InventoryModel {
     private final String title;
     private final List<ItemStack> items;
 
-    public InventoryModel(String name, String title, List<ItemStack> items){
+    public InventoryModel(String name, String title, List<ItemStack> items) {
         this.name = name;
         this.title = title;
         this.items = items;

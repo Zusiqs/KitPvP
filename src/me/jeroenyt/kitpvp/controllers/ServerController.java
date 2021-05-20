@@ -9,7 +9,7 @@ public class ServerController {
 
     private final ServerModel server;
 
-    public ServerController(Plugin plugin){
+    public ServerController(Plugin plugin) {
         Location location;
 
         if(plugin.getConfig().contains("spawn")) {

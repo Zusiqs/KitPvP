@@ -12,7 +12,7 @@ public class UserHandler {
 
     private final KitPvP plugin;
 
-    public UserHandler(KitPvP plugin){
+    public UserHandler(KitPvP plugin) {
         this.plugin = plugin;
     }
 
@@ -37,7 +37,7 @@ public class UserHandler {
                 "0", "0"));
     }
 
-    private UserModel getPlayer(final UUID uuid){
+    private UserModel getPlayer(final UUID uuid) {
         try {
             ResultSet result = plugin.databaseHandler.sqlQuery("SELECT * FROM users WHERE uuid=?", Arrays.asList(uuid.toString()));
             if (result != null) {
@@ -48,20 +48,20 @@ public class UserHandler {
                     return new UserModel(uuid, kills, deaths);
                 }
             }
-        }catch(SQLException e){
+        }catch(SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public void loadPlayer(UUID uuid){
-        if(plugin.userHandler.playerExists(uuid)){
+    public void loadPlayer(UUID uuid) {
+        if(plugin.userHandler.playerExists(uuid)) {
             plugin.userController.addUser(plugin.userHandler.getPlayer(uuid));
         }else{
             plugin.userController.addUser(new UserModel(uuid, 0,0));
         }
     }
-    public void savePlayer(UUID uuid){
+    public void savePlayer(UUID uuid) {
         UserModel user = plugin.userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
 
         plugin.databaseHandler.sqlQuery("UPDATE users SET uuid=?, kills=?, deaths=? WHERE uuid=?"

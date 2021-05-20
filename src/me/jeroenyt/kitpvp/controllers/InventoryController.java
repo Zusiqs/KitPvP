@@ -16,7 +16,27 @@ public class InventoryController {
     private final List<InventoryModel> inventoryModels;
     private final List<Inventory> inventories;
 
-    public InventoryController(KitPvP plugin){
+    private void createInventories() {
+        for(InventoryModel inv : inventoryModels) {
+            int size = (int) Math.ceil(inv.getItems().size() / 4.0) * 9;
+
+            Inventory inventory = Bukkit.createInventory(null, size, inv.getTitle());
+
+            int count = 1;
+            for(ItemStack item : inv.getItems()) {
+                inventory.setItem(count, item);
+                count += 2;
+            }
+
+            getInventories().add(inventory);
+        }
+    }
+
+    private List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public InventoryController(KitPvP plugin) {
         inventories = new ArrayList<>();
         inventoryModels = new ArrayList<>();
 
@@ -26,31 +46,11 @@ public class InventoryController {
         createInventories();
     }
 
-    private void createInventories() {
-        for(InventoryModel inv : inventoryModels){
-            int size = (int) Math.ceil(inv.getItems().size() / 4.0) * 9;
-
-            Inventory inventory = Bukkit.createInventory(null, size, inv.getTitle());
-
-            int count = 1;
-            for(ItemStack item : inv.getItems()){
-                inventory.setItem(count, item);
-                count += 2;
-            }
-
-            getInventories().add(inventory);
-        }
-    }
-
-    public void addInventory(InventoryModel inv){
+    public void addInventory(InventoryModel inv) {
         inventoryModels.add(inv);
     }
 
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
-
-    public Inventory getInventory(String title){
+    public Inventory getInventory(String title) {
         return inventories.stream().filter(inv -> inv.getTitle().equalsIgnoreCase(Utils.format(title))).findAny().get();
     }
 

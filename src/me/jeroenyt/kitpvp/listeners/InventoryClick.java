@@ -15,11 +15,11 @@ public class InventoryClick implements Listener {
 
     private final KitPvP plugin;
 
-    public InventoryClick(KitPvP plugin){
+    public InventoryClick(KitPvP plugin) {
         this.plugin = plugin;
     }
     @EventHandler
-    public void onClick(InventoryClickEvent event){
+    private void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
 

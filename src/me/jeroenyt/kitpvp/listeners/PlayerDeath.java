@@ -11,22 +11,22 @@ public class PlayerDeath implements Listener {
 
     private final KitPvP plugin;
 
-    public PlayerDeath(KitPvP plugin){
+    public PlayerDeath(KitPvP plugin) {
         this.plugin = plugin;
     }
     @EventHandler
-    public void onDeath(PlayerDeathEvent event){
+    private void onDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         event.setKeepInventory(true);
 
         plugin.userController.getUser(player.getUniqueId()).increaseDeaths();
 
-        if(event.getEntity().getKiller() != null){
+        if(event.getEntity().getKiller() != null) {
             Player killer = event.getEntity().getKiller();
             plugin.userController.getUser(killer.getUniqueId()).increaseKills();
         }
 
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             @Override
             public void run() {
                 player.spigot().respawn();

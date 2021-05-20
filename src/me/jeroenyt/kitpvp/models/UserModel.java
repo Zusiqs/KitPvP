@@ -8,7 +8,7 @@ public class UserModel {
     private int kills;
     private int deaths;
 
-    public UserModel(UUID uuid, int kills, int deaths){
+    public UserModel(UUID uuid, int kills, int deaths) {
         this.uuid = uuid;
         this.kills = kills;
         this.deaths = deaths;

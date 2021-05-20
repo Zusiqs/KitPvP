@@ -11,11 +11,11 @@ public class PlayerJoin implements Listener {
 
     private final KitPvP plugin;
 
-    public PlayerJoin(KitPvP plugin){
+    public PlayerJoin(KitPvP plugin) {
         this.plugin = plugin;
     }
     @EventHandler
-    public void onJoin(PlayerJoinEvent event){
+    private void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
         plugin.userHandler.loadPlayer(player.getUniqueId());

@@ -14,26 +14,12 @@ public class KitHandler {
     private final KitPvP plugin;
     private final DatabaseHandler dbHandler;
 
-    public KitHandler(KitPvP plugin){
-        this.plugin = plugin;
-        dbHandler = plugin.databaseHandler;
-        loadKits();
-    }
-    public boolean kitExist(String kit){
-        try {
-            return dbHandler.sqlQuery("SELECT * FROM kits WHERE name=?", Arrays.asList(kit)).next();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public void createKit(KitModel kit) {
+    private void createKit(KitModel kit) {
         dbHandler.sqlQuery("INSERT INTO kits (name, armor, inventory) VALUES (?,?,?)",
                 Arrays.asList(kit.getName(), ConvertToString(kit.getArmorContents()), ConvertToString(kit.getInventoryContents())));
     }
 
-    public void updateKit(KitModel kit) {
+    private void updateKit(KitModel kit) {
         if (kit.isUpdate()) {
             dbHandler.sqlQuery("UPDATE kits SET armor=?, inventory=?" +
                             " WHERE name=?",
@@ -41,20 +27,10 @@ public class KitHandler {
         }
     }
 
-    public void saveKits(){
-        for(KitModel kit : plugin.kitController.getKits()){
-            if(kitExist(kit.getName())){
-                updateKit(kit);
-            }else{
-                createKit(kit);
-            }
-        }
-    }
-
-    public void loadKits(){
+    private void loadKits() {
         try{
             ResultSet result = plugin.databaseHandler.sqlQuery("SELECT * FROM kits", null);
-            while(result.next()){
+            while(result.next()) {
                 String kit_name = result.getString("name");
                 String armor = result.getString("armor");
                 String inventory = result.getString("inventory");
@@ -62,12 +38,12 @@ public class KitHandler {
 
                 plugin.kitController.addKit(kit_name, serializeItemArray(armor), serializeItemArray(inventory), item,false);
             }
-        }catch(SQLException e){
+        }catch(SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private String ConvertToString(ItemStack[] items){
+    private String ConvertToString(ItemStack[] items) {
         StringBuilder converted_inv = new StringBuilder();
         for (ItemStack item : items) {
             converted_inv.append(ItemStackSerializer.serialize(item)).append("___");
@@ -75,12 +51,38 @@ public class KitHandler {
         return converted_inv.toString();
     }
 
-    private ItemStack[] serializeItemArray(String content){
+    private ItemStack[] serializeItemArray(String content) {
         String[] splitted_string = content.split("___");
         ItemStack[] items = new ItemStack[splitted_string.length];
-        for(int i = 0; i < splitted_string.length; i++){
+        for(int i = 0; i < splitted_string.length; i++) {
             items[i] = ItemStackSerializer.deserialize(splitted_string[i]);
         }
         return items;
     }
+
+    public KitHandler(KitPvP plugin) {
+        this.plugin = plugin;
+        dbHandler = plugin.databaseHandler;
+        loadKits();
+    }
+
+    public boolean kitExist(String kit) {
+        try {
+            return dbHandler.sqlQuery("SELECT * FROM kits WHERE name=?", Arrays.asList(kit)).next();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void saveKits() {
+        for(KitModel kit : plugin.kitController.getKits()) {
+            if(kitExist(kit.getName())) {
+                updateKit(kit);
+            }else{
+                createKit(kit);
+            }
+        }
+    }
+
 }

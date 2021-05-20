@@ -11,7 +11,7 @@ public class KitModel {
     private final Material item;
     private final boolean update;
 
-    public KitModel(String name, ItemStack[] armorContents, ItemStack[] inventoryContents, String item, boolean update){
+    public KitModel(String name, ItemStack[] armorContents, ItemStack[] inventoryContents, String item, boolean update) {
         this.name = name;
         this.armorContents = armorContents;
         this.inventoryContents = inventoryContents;

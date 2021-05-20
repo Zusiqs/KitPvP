@@ -8,11 +8,11 @@ public class DatabaseInfoController {
     private final DatabaseInfoModel databaseInfo;
 
 
-    public DatabaseInfoController(KitPvP plugin){
+    public DatabaseInfoController(KitPvP plugin) {
 
         if(plugin.getConfig().contains("database.host") && plugin.getConfig().contains("database.port") &&
                 plugin.getConfig().contains("database.database") && plugin.getConfig().contains("database.username") &&
-                plugin.getConfig().contains("database.password")){
+                plugin.getConfig().contains("database.password")) {
 
             String host = plugin.getConfig().getString("database.host");
             int port = plugin.getConfig().getInt("database.port");

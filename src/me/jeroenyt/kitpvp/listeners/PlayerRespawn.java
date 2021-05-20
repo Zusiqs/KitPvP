@@ -12,11 +12,11 @@ public class PlayerRespawn implements Listener {
 
     private final KitPvP plugin;
 
-    public PlayerRespawn(KitPvP plugin){
+    public PlayerRespawn(KitPvP plugin) {
         this.plugin = plugin;
     }
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onRespawn(PlayerRespawnEvent event){
+    private void onRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
 
         event.setRespawnLocation(plugin.serverController.getServer().getSpawn());

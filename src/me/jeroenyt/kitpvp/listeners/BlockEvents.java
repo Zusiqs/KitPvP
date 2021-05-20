@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 public class BlockEvents implements Listener {
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event){
+    public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
         if(!player.getGameMode().equals(GameMode.CREATIVE)) {
@@ -19,7 +19,7 @@ public class BlockEvents implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event){
+    public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
         if(!player.getGameMode().equals(GameMode.CREATIVE)) {

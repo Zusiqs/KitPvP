@@ -13,17 +13,17 @@ import java.util.List;
 
 public class KitSelection {
 
-    public KitSelection(InventoryController controller, KitPvP plugin){
+    public KitSelection(InventoryController controller, KitPvP plugin) {
         String name = "Kit Selection";
         String title = Utils.format("&fKit Selection");
         List<ItemStack> items = new ArrayList<>();
 
-        for(KitModel kit : plugin.kitController.getKits()){
+        for(KitModel kit : plugin.kitController.getKits()) {
             ItemStack item = Utils.createGuiItem(kit.getItem(), "&c" + kit.getName(), Utils.format("&7Klik hier om deze kit te kiezen"));
             items.add(item);
         }
 
-        if(items.size() < 1){
+        if(items.size() < 1) {
             ItemStack item = Utils.createGuiItem(Material.BEDROCK, "&cGeen kits beschikbaar", Utils.format("&7Klik hier om deze kit te kiezen"));
             items.add(item);
         }

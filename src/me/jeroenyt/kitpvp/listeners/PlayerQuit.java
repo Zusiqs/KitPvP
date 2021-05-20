@@ -12,17 +12,18 @@ public class PlayerQuit implements Listener {
 
     private final KitPvP plugin;
 
-    public PlayerQuit(KitPvP plugin){
+    public PlayerQuit(KitPvP plugin) {
         this.plugin = plugin;
     }
+
     @EventHandler
-    public void onQuit(PlayerQuitEvent event){
+    private void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
         removePlayer(player.getUniqueId());
     }
 
-    private void removePlayer(UUID uuid){
+    private void removePlayer(UUID uuid) {
         plugin.userHandler.savePlayer(uuid);
         plugin.userController.removeUser(uuid);
     }
