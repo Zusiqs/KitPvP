@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class InventoryClick implements Listener {
 
@@ -39,9 +40,11 @@ public class InventoryClick implements Listener {
             String name = is.getItemMeta().getDisplayName().substring(2);
 
             KitModel kit = plugin.kitController.getKit(name);
+            PlayerInventory inventory = player.getInventory();
 
-            player.getInventory().setContents(kit.getInventoryContents());
-            player.getInventory().setArmorContents(kit.getArmorContents());
+            inventory.setContents(kit.getInventoryContents());
+            inventory.setArmorContents(kit.getArmorContents());
+
             player.closeInventory();
         }
     }

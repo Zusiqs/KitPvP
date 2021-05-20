@@ -20,7 +20,6 @@ public class PlayerRespawn implements Listener {
         Player player = event.getPlayer();
 
         event.setRespawnLocation(plugin.serverController.getServer().getSpawn());
-
         Utils.giveStartItems(player);
 
     }

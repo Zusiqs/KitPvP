@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerInteract implements Listener {
 
@@ -21,13 +22,15 @@ public class PlayerInteract implements Listener {
     @EventHandler
     private void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        Action action = event.getAction();
+        ItemStack item = player.getItemInHand();
 
-        if (player.getItemInHand() == null || player.getItemInHand().getType().equals(Material.AIR)) return;
+        if (item == null || item.getType().equals(Material.AIR)) return;
 
-        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-            if (player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(Utils.format("&cKit Selection"))) {
+        if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) {
+            if (item.getItemMeta().getDisplayName().equalsIgnoreCase(Utils.format("&cKit Selection"))) {
+
                 Inventory inv = plugin.inventoryController.getInventory("&fKit Selection");
-
                 player.openInventory(inv);
             }
         }

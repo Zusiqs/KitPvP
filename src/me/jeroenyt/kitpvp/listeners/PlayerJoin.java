@@ -19,7 +19,6 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         plugin.userHandler.loadPlayer(player.getUniqueId());
-
         player.teleport(plugin.serverController.getServer().getSpawn());
         Utils.giveStartItems(player);
     }

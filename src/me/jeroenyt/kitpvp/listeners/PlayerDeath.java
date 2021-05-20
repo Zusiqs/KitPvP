@@ -21,8 +21,9 @@ public class PlayerDeath implements Listener {
 
         plugin.userController.getUser(player.getUniqueId()).increaseDeaths();
 
-        if(event.getEntity().getKiller() != null) {
-            Player killer = event.getEntity().getKiller();
+        Player killer = event.getEntity().getKiller();
+
+        if(killer != null) {
             plugin.userController.getUser(killer.getUniqueId()).increaseKills();
         }
 

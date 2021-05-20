@@ -3,7 +3,9 @@ package me.jeroenyt.kitpvp.utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
@@ -20,16 +22,16 @@ public class Utils {
 
         meta.setDisplayName(Utils.format(name));
         meta.setLore(Arrays.asList(lore));
-
         item.setItemMeta(meta);
 
         return item;
     }
 
     public static void giveStartItems(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setArmorContents(new ItemStack[player.getInventory().getArmorContents().length]);
+        PlayerInventory inventory = player.getInventory();
 
-        player.getInventory().setItem(4, createGuiItem(Material.WATCH, "&cKit Selection", Utils.format("Hiermee kan je kits kiezen")));
+        inventory.clear();
+        inventory.setArmorContents(new ItemStack[inventory.getArmorContents().length]);
+        inventory.setItem(4, createGuiItem(Material.WATCH, "&cKit Selection", Utils.format("Hiermee kan je kits kiezen")));
     }
 }
