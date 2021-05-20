@@ -1,5 +1,6 @@
 package me.jeroenyt.kitpvp.scoreboard;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.Bukkit;
@@ -76,10 +77,14 @@ public class Board {
             List<String> list = new ArrayList<>();
             list.add("   ");
             list.add("&cSpeler informatie »");
-            list.add("&fName: &a%player%");
+            list.add("&fName: &a%player_name%");
+            list.add("&fRank: &a%luckperms_prefix%");
             list.add("&fKills: &a%kills%");
             list.add("&fDeaths: &a%deaths%");
             list.add("             ");
+            list.add("&cServer informatie »");
+            list.add("&fOnline: &a%server_online%");
+            list.add("              ");
             list.add("&7play.kitpvp.nl");
             config.set("scoreboard.lines", list);
         }
@@ -94,9 +99,14 @@ public class Board {
 
         for(int i = lines.size()-1; i >= 0; i--){
             String line = lines.get(i)
-                    .replaceAll("%player%", p.getName())
                     .replaceAll("%kills%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getKills()))
                     .replaceAll("%deaths%", Integer.toString(plugin.userController.getUser(p.getUniqueId()).getDeaths()));
+
+            //set with placeholders
+            if(Bukkit.getPluginManager().isPluginEnabled("PlaceHolderAPI")) {
+                line = PlaceholderAPI.setPlaceholders(p, line);
+            }
+
             replaceScore(objective, count, Utils.format(line));
             count++;
         }
