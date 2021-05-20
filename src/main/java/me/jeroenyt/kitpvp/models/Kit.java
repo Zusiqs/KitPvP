@@ -3,7 +3,7 @@ package me.jeroenyt.kitpvp.models;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class KitModel {
+public class Kit {
 
     private final String name;
     private final ItemStack[] armorContents;
@@ -11,7 +11,7 @@ public class KitModel {
     private final Material item;
     private final boolean update;
 
-    public KitModel(String name, ItemStack[] armorContents, ItemStack[] inventoryContents, Material material, boolean update) {
+    public Kit(String name, ItemStack[] armorContents, ItemStack[] inventoryContents, Material material, boolean update) {
         this.name = name;
         this.armorContents = armorContents;
         this.inventoryContents = inventoryContents;

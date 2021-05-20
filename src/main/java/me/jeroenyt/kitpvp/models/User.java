@@ -2,13 +2,13 @@ package me.jeroenyt.kitpvp.models;
 
 import java.util.UUID;
 
-public class UserModel {
+public class User {
 
     private final UUID uuid;
     private int kills;
     private int deaths;
 
-    public UserModel(UUID uuid, int kills, int deaths) {
+    public User(UUID uuid, int kills, int deaths) {
         this.uuid = uuid;
         this.kills = kills;
         this.deaths = deaths;

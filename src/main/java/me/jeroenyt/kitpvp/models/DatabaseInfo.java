@@ -1,6 +1,6 @@
 package me.jeroenyt.kitpvp.models;
 
-public class DatabaseInfoModel {
+public class DatabaseInfo {
 
     private final String host;
     private final int port;
@@ -8,7 +8,7 @@ public class DatabaseInfoModel {
     private final String user;
     private final String password;
 
-    public DatabaseInfoModel(String host, int port, String database, String user, String password) {
+    public DatabaseInfo(String host, int port, String database, String user, String password) {
         this.host = host;
         this.port = port;
         this.database = database;

@@ -1,8 +1,7 @@
 package me.jeroenyt.kitpvp.handlers;
 
-import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.controllers.KitController;
-import me.jeroenyt.kitpvp.models.KitModel;
+import me.jeroenyt.kitpvp.models.Kit;
 import me.jeroenyt.kitpvp.utils.ItemStackSerializer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -16,13 +15,13 @@ public class KitHandler {
     private final DatabaseHandler databaseHandler;
     private final KitController kitController;
 
-    private void createKit(KitModel kit) {
+    private void createKit(Kit kit) {
         PreparedStatement statement = databaseHandler.prepareStatement("INSERT INTO kits (name, armor, inventory) VALUES (?,?,?)",
                 kit.getName(), ConvertToString(kit.getArmorContents()), ConvertToString(kit.getInventoryContents()));
         databaseHandler.execute(statement);
     }
 
-    private void updateKit(KitModel kit) {
+    private void updateKit(Kit kit) {
         if (kit.isUpdate()) {
             PreparedStatement statement =
                     databaseHandler.prepareStatement("UPDATE kits SET armor=?, inventory=? WHERE name=?",
@@ -79,7 +78,7 @@ public class KitHandler {
     }
 
     public void saveKits() {
-        for(KitModel kit : kitController.getKits()) {
+        for(Kit kit : kitController.getKits()) {
             if(kitExist(kit.getName())) {
                 updateKit(kit);
             }else{

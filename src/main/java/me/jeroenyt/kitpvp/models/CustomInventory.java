@@ -4,13 +4,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class InventoryModel {
+public class CustomInventory {
 
     private String name;
     private final String title;
     private final List<ItemStack> items;
 
-    public InventoryModel(String name, String title, List<ItemStack> items) {
+    public CustomInventory(String name, String title, List<ItemStack> items) {
         this.name = name;
         this.title = title;
         this.items = items;

@@ -1,13 +1,13 @@
 package me.jeroenyt.kitpvp.controllers;
 
-import me.jeroenyt.kitpvp.models.ServerModel;
+import me.jeroenyt.kitpvp.models.Server;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
 public class ServerController {
 
-    private final ServerModel server;
+    private final Server server;
 
     public ServerController(Plugin plugin) {
         Location location;
@@ -18,11 +18,11 @@ public class ServerController {
             location = Bukkit.getWorld("world").getSpawnLocation();
         }
 
-        server = new ServerModel(location);
+        server = new Server(location);
 
     }
 
-    public ServerModel getServer() {
+    public Server getServer() {
         return server;
     }
 

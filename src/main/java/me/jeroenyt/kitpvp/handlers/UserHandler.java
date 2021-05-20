@@ -1,14 +1,11 @@
 package me.jeroenyt.kitpvp.handlers;
 
-import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.controllers.UserController;
-import me.jeroenyt.kitpvp.models.UserModel;
+import me.jeroenyt.kitpvp.models.User;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.UUID;
 
 public class UserHandler {
@@ -39,14 +36,14 @@ public class UserHandler {
         databaseHandler.execute(statement);
     }
 
-    private UserModel getPlayer(final UUID uuid) {
+    private User getPlayer(final UUID uuid) {
         try {
             PreparedStatement statement = databaseHandler.prepareStatement("SELECT * FROM users WHERE uuid=?", uuid.toString());
             CachedRowSet result = databaseHandler.query(statement);
             int kills = result.getInt("kills");
             int deaths = result.getInt("deaths");
 
-            return new UserModel(uuid, kills, deaths);
+            return new User(uuid, kills, deaths);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,11 +55,11 @@ public class UserHandler {
         if(playerExists(uuid)) {
             userController.addUser(getPlayer(uuid));
         }else{
-            userController.addUser(new UserModel(uuid, 0,0));
+            userController.addUser(new User(uuid, 0,0));
         }
     }
     public void savePlayer(UUID uuid) {
-        UserModel user = userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
+        User user = userController.getUsers().stream().filter(player -> player.getUuid().equals(uuid)).findFirst().get();
 
         PreparedStatement statement = databaseHandler.prepareStatement("UPDATE users SET uuid=?, kills=?, deaths=? WHERE uuid=?"
                 , uuid.toString(), Integer.toString(user.getKills()), Integer.toString(user.getDeaths()), uuid.toString());

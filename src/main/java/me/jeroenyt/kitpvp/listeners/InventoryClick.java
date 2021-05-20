@@ -1,8 +1,7 @@
 package me.jeroenyt.kitpvp.listeners;
 
-import me.jeroenyt.kitpvp.KitPvP;
 import me.jeroenyt.kitpvp.controllers.KitController;
-import me.jeroenyt.kitpvp.models.KitModel;
+import me.jeroenyt.kitpvp.models.Kit;
 import me.jeroenyt.kitpvp.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,7 +39,7 @@ public class InventoryClick implements Listener {
         if (inv.getName().equals(Utils.format("&fKit Selection"))) {
             String name = is.getItemMeta().getDisplayName().substring(2);
 
-            KitModel kit = kitController.getKit(name);
+            Kit kit = kitController.getKit(name);
             PlayerInventory inventory = player.getInventory();
 
             inventory.setContents(kit.getInventoryContents());

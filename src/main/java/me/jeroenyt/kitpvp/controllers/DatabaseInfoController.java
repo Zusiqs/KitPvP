@@ -1,11 +1,11 @@
 package me.jeroenyt.kitpvp.controllers;
 
 import me.jeroenyt.kitpvp.KitPvP;
-import me.jeroenyt.kitpvp.models.DatabaseInfoModel;
+import me.jeroenyt.kitpvp.models.DatabaseInfo;
 
 public class DatabaseInfoController {
 
-    private final DatabaseInfoModel databaseInfo;
+    private final DatabaseInfo databaseInfo;
 
 
     public DatabaseInfoController(KitPvP plugin) {
@@ -20,18 +20,18 @@ public class DatabaseInfoController {
             String username = plugin.getConfig().getString("database.username");
             String password = plugin.getConfig().getString("database.password");
 
-            databaseInfo = new DatabaseInfoModel(host, port,database, username, password);
+            databaseInfo = new DatabaseInfo(host, port,database, username, password);
 
             plugin.log("Credentials found");
 
             return;
         }
 
-        databaseInfo = new DatabaseInfoModel("localhost", 3306, "database", "root", "password");
+        databaseInfo = new DatabaseInfo("localhost", 3306, "database", "root", "password");
     }
 
 
-    public DatabaseInfoModel getDatabaseInfo() {
+    public DatabaseInfo getDatabaseInfo() {
         return databaseInfo;
     }
 }

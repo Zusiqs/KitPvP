@@ -1,19 +1,19 @@
 package me.jeroenyt.kitpvp.controllers;
 
-import me.jeroenyt.kitpvp.models.UserModel;
+import me.jeroenyt.kitpvp.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class UserController {
-    private final List<UserModel> users;
+    private final List<User> users;
 
     public UserController() {
         users = new ArrayList<>();
     }
 
-    public void addUser(UserModel user) {
+    public void addUser(User user) {
         users.add(user);
     }
 
@@ -21,11 +21,11 @@ public class UserController {
         users.removeIf(player -> player.getUuid().equals(uuid));
     }
 
-    public UserModel getUser(UUID uuid) {
+    public User getUser(UUID uuid) {
         return users.stream().filter(player -> player.getUuid().equals(uuid)).findAny().get();
     }
 
-    public List<UserModel> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 

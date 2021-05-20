@@ -2,11 +2,11 @@ package me.jeroenyt.kitpvp.models;
 
 import org.bukkit.Location;
 
-public class ServerModel {
+public class Server {
 
     private Location spawn;
 
-    public ServerModel(Location spawn) {
+    public Server(Location spawn) {
         this.spawn = spawn;
     }
 

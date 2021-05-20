@@ -4,7 +4,7 @@ import me.jeroenyt.kitpvp.commands.CommandManager;
 import me.jeroenyt.kitpvp.controllers.*;
 import me.jeroenyt.kitpvp.handlers.*;
 import me.jeroenyt.kitpvp.listeners.*;
-import me.jeroenyt.kitpvp.models.DatabaseInfoModel;
+import me.jeroenyt.kitpvp.models.DatabaseInfo;
 import me.jeroenyt.kitpvp.scoreboard.Board;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -51,7 +51,7 @@ public class KitPvP extends JavaPlugin {
         //database information
         DatabaseInfoController databaseInfoController = new DatabaseInfoController(this);
 
-        DatabaseInfoModel dbInfo = databaseInfoController.getDatabaseInfo();
+        DatabaseInfo dbInfo = databaseInfoController.getDatabaseInfo();
 
         //database connection
         databaseHandler = new DatabaseHandler("com.mysql.jdbc.Driver", "jdbc:mysql://" +
